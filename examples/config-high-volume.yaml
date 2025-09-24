@@ -1,0 +1,28 @@
+prometheus:
+  query_url: "http://localhost:9090"
+  remote_write_url: "http://localhost:9090/api/v1/write"
+
+# Log level: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+log_level: "INFO"
+
+benchmark:
+  replication_factor: 5   # Balanced replicas for high volume without overwhelming
+  query_range_hours: 3    # Good amount of historical data
+  query_step_seconds: 12  # Balance between volume and manageability
+  samples_per_second: 25000  # High but achievable target rate
+  batch_size: 500         # Good balance for throughput
+
+replication_labels:
+  - name: "promfire_load_test"
+    values: ["high-volume-test"]
+
+  - name: "promfire_environment"
+    values: ["load-test", "performance-test"]
+
+  - name: "promfire_region"
+    values: ["us-east-1", "eu-west-1"]
+
+# Minimal exclusions for maximum load
+exclude_metrics:
+  - "up"
+  - "prometheus_build_info"

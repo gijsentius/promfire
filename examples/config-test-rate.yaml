@@ -1,0 +1,22 @@
+prometheus:
+  query_url: "http://localhost:9090"
+  remote_write_url: "http://localhost:9090/api/v1/write"
+
+# Log level: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+log_level: "INFO"
+
+benchmark:
+  replication_factor: 2
+  query_range_hours: 2 # 2 hours of data
+  query_step_seconds: 15
+  samples_per_second: 30000 # Test with low rate to verify it works
+  batch_size: 100
+
+replication_labels:
+  - name: "promfire_test"
+    values: ["rate-test-1"]
+
+# Minimal exclusions for maximum benchmarking load
+exclude_metrics:
+  - "up"
+  - "prometheus_.*"

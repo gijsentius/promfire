@@ -1,0 +1,27 @@
+prometheus:
+  query_url: "http://localhost:9090"
+  remote_write_url: "http://localhost:9090/api/v1/write"
+
+# Log level: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+log_level: "INFO"
+
+benchmark:
+  replication_factor: 5  # This will auto-generate bench-1 through bench-5
+  query_range_hours: 0.1
+  query_step_seconds: 15
+  samples_per_second: 500
+  batch_size: 10
+
+replication_labels:
+  # benchmark_instance values will be auto-generated based on replication_factor
+  - name: "benchmark_instance"
+    values: []  # Empty - will auto-generate: ["bench-1", "bench-2", "bench-3", "bench-4", "bench-5"]
+
+  # Other labels work normally
+  - name: "benchmark_region"
+    values: ["us-east", "eu-west"]
+
+# Minimal exclusions
+exclude_metrics:
+  - "up"
+  - "prometheus_.*"
